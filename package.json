@@ -1,0 +1,27 @@
+{
+  "name": "ecommerce_amaxon",
+  "version": "1.0.0",
+  "description": "React & Redux ECommerce App",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec babel-node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BassamHajar/ECommerce_Amaxon.git"
+  },
+  "author": "Bassam_Hager",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BassamHajar/ECommerce_Amaxon/issues"
+  },
+  "homepage": "https://github.com/BassamHajar/ECommerce_Amaxon#readme",
+  "dependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
