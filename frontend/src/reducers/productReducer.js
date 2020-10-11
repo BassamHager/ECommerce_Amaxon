@@ -33,5 +33,4 @@ const productDetailsReducer = (state = { product: {} }, action) => {
   }
 };
 
-
 export { productListReducer, productDetailsReducer };

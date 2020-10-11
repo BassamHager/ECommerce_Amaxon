@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./App.css";
+// components
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 
@@ -45,7 +46,7 @@ const App = () => {
         <main className="main">
           <div className="content">
             <Route path="/product/:id" component={ProductScreen} />
-            <Route path="/" exact={true} component={HomeScreen} />
+            <Route path="/" exact component={HomeScreen} />
           </div>
         </main>
 
