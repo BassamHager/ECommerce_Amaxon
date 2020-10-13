@@ -14,7 +14,7 @@ const ProductScreen = (props) => {
   useEffect(() => {
     dispatch(detailsProduct(productId)); //fix the naming
     return () => {};
-  }, []);
+  }, [productId, dispatch]);
 
   // add to cart
   const handleAddToCart = () =>
