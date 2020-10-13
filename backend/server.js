@@ -18,7 +18,7 @@ mongoose
     .connect(mongodbUrl, { useNewUrlParser: true, 
       useUnifiedTopology: true, 
       useCreateIndex: true },console.log('db connected..'))
-    .catch (err=> {console.error(err.reason)})
+    .catch (err=> {console.error(err.reason); process.exit(1)})
 
 // constants
 const app = express();

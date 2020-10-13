@@ -8,7 +8,7 @@ import {
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducer";
-import { userSigninReducer } from "./reducers/userReducers";
+import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
 // cookie
 const cartItems = Cookie.getJSON("cartItems") || [];
@@ -20,7 +20,8 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
-  userSignin: userSigninReducer
+  userSignin: userSigninReducer,
+  userRegister: userRegisterReducer
 });
 
 // enhancer
