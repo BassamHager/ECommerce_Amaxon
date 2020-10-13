@@ -1,8 +1,28 @@
+// packages & libraries
 import express from "express";
+import dotenv from "dotenv";
+import config from "./config";
+import mongoose from "mongoose";
+// data
 import data from "./data";
+// routes
+import userRoute from './routes/userRoute'
+
+// config
+dotenv.config();
+const mongodbUrl = config.MONGODB_URL;
+
+mongoose
+    .connect(mongodbUrl, { useNewUrlParser: true, 
+      useUnifiedTopology: true, 
+      useCreateIndex: true },console.log('db connected..'))
+    .catch (err=> {console.error(err.reason)})
 
 const app = express();
 const PORT = 5000;
+
+// middleware
+app.use('/api/users',userRoute)
 
 // product
 app.get("/api/products/:id", (req, res) => {
