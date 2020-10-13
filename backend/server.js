@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import config from "./config";
 import mongoose from "mongoose";
+import bodyParser from 'body-parser'
 // data
 import data from "./data";
 // routes
@@ -12,16 +13,19 @@ import userRoute from './routes/userRoute'
 dotenv.config();
 const mongodbUrl = config.MONGODB_URL;
 
+// db connection
 mongoose
     .connect(mongodbUrl, { useNewUrlParser: true, 
       useUnifiedTopology: true, 
       useCreateIndex: true },console.log('db connected..'))
     .catch (err=> {console.error(err.reason)})
 
+// constants
 const app = express();
 const PORT = 5000;
 
 // middleware
+app.use(bodyParser.json())
 app.use('/api/users',userRoute)
 
 // product
