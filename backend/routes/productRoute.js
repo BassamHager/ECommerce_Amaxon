@@ -1,9 +1,67 @@
 import express from 'express';
 import Product from '../models/productModel';
 // import {getToken} from '../util'
-// import { isAuth, isAdmin } from '../util';
+import { isAuth, isAdmin } from '../util';
 
-const router = express.Router();
+const router = express.Router(); 
+// todo: add dlt all with a specific button to admin
+
+// get all
+router.get('/',async(_,res)=>{
+  const products = await Product.find({})
+  res.send(products)
+})
+
+// add product
+router.post('/', isAuth, isAdmin, async (req, res) => {
+  const product = new Product({
+  name: req.body.name,
+  price: req.body.price,
+  image: req.body.image,
+  brand: req.body.brand,
+  category: req.body.category,
+  countInStock: req.body.countInStock,
+  description: req.body.description,
+  rating: req.body.rating,
+  numReviews: req.body.numReviews,
+});
+
+const newProduct = await product.save();
+if (newProduct) {
+  return res
+    .status(201)
+    .send({ message: 'New Product Created', data: newProduct });
+}
+
+return res.status(500).send({ message: ' Error in Creating Product.' });
+});
+
+// update 
+router.put('/:id', isAuth, isAdmin, async (req, res) => {
+  console.log('put')
+  const productId = req.params.id;
+  console.log("productId", productId)
+  console.log("params", req.params)
+  const product = await Product.findById(productId);
+  if (product) {
+    product.name = req.body.name;
+    product.price = req.body.price;
+    product.image = req.body.image;
+    product.brand = req.body.brand;
+    product.category = req.body.category;
+    product.countInStock = req.body.countInStock;
+    product.description = req.body.description;
+    const updatedProduct = await product.save();
+
+    if (updatedProduct) {
+      console.log(updatedProduct)
+      return res
+        .status(200)
+        .send({ message: 'Product Updated', data: updatedProduct });
+    }
+  }
+  return res.status(500).send({ message: ' Error in Updating Product.' });
+});
 
 // router.get('/', async (req, res) => {
 //   const category = req.query.category ? { category: req.query.category } : {};
@@ -57,33 +115,10 @@ const router = express.Router();
 //   }
 // });
 
-router.put('/:id',async (req, res) => {
-  console.log('put')
-  const productId = req.params.id;
-  console.log("productId", productId)
-  console.log("params", req.params)
-  const product = await Product.findById(productId);
-  if (product) {
-    product.name = req.body.name;
-    product.price = req.body.price;
-    product.image = req.body.image;
-    product.brand = req.body.brand;
-    product.category = req.body.category;
-    product.countInStock = req.body.countInStock;
-    product.description = req.body.description;
-    const updatedProduct = await product.save();
 
-    if (updatedProduct) {
-      console.log(updatedProduct)
-      return res
-        .status(200)
-        .send({ message: 'Product Updated', data: updatedProduct });
-    }
-  }
-  return res.status(500).send({ message: ' Error in Updating Product.' });
-});
 
-router.delete('/:id', async (req, res) => {
+// delete product
+router.delete('/:id',isAuth, isAdmin, async (req, res) => {
   const deletedProduct = await Product.findById(req.params.id);
   if (deletedProduct) {
     await deletedProduct.remove();
@@ -93,32 +128,8 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/',async(_,res)=>{
-    const products = await Product.find({})
-    res.send(products)
-})
 
-router.post('/', async (req, res) => {
-    const product = new Product({
-    name: req.body.name,
-    price: req.body.price,
-    image: req.body.image,
-    brand: req.body.brand,
-    category: req.body.category,
-    countInStock: req.body.countInStock,
-    description: req.body.description,
-    rating: req.body.rating,
-    numReviews: req.body.numReviews,
-  });
 
-  const newProduct = await product.save();
-  if (newProduct) {
-    return res
-      .status(201)
-      .send({ message: 'New Product Created', data: newProduct });
-  }
 
-  return res.status(500).send({ message: ' Error in Creating Product.' });
-});
 
 export default router;
