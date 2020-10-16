@@ -5,6 +5,7 @@ import Cookie from "js-cookie";
 // reducers
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  productDeleteReducer,
   productDetailsReducer,
   productListReducer,
   productSaveReducer,
@@ -23,7 +24,8 @@ const reducer = combineReducers({
   cart: cartReducer,
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
-  productSave: productSaveReducer
+  productSave: productSaveReducer,
+  productDelete: productDeleteReducer
 });
 
 // enhancer

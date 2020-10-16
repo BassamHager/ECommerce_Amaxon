@@ -5,9 +5,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   saveProduct,
   listProducts,
+  deleteProduct,
 } from '../actions/productActions';
 
 const ProductsScreen=()=> {
+  // redux
+  const productList = useSelector((state) => state.productList);
+  const {  products } = productList; // dis up
+  const productSave = useSelector((state) => state.productSave);
+  const {
+    loading: loadingSave,
+    success: successSave,
+    error: errorSave,
+  } = productSave; // dis up
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    // loading: loadingDelete, // check
+    success: successDelete,
+    // error: errorDelete,
+  } = productDelete; // dis up
+  // inner state
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -17,23 +34,9 @@ const ProductsScreen=()=> {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
-  const productList = useSelector((state) => state.productList);
-  const {  products } = productList; // dis up
-  const productSave = useSelector((state) => state.productSave);
-  const {
-    loading: loadingSave,
-    success: successSave,
-    error: errorSave,
-  } = productSave; // dis up
   // const [uploading, setUploading] = useState(false);
 
 
-  // const productDelete = useSelector((state) => state.productDelete);
-  // const {
-  //   loading: loadingDelete, // check
-  //   success: successDelete,
-  //   error: errorDelete,
-  // } = productDelete; // dis up
 
   const dispatch = useDispatch();
 
@@ -45,7 +48,7 @@ const ProductsScreen=()=> {
     return () => {
       //
     };
-  }, [dispatch,successSave]); 
+  }, [dispatch,successSave,successDelete]); 
 
   const openModal = (product) => {
     setModalVisible(true);
@@ -75,9 +78,9 @@ const ProductsScreen=()=> {
     );
   };
 
-  // const deleteHandler = (product) => {
-  //   dispatch(deleteProdcut(product._id));
-  // };
+  const deleteHandler = (product) => {
+    dispatch(deleteProduct(product._id));
+  };
 
   const uploadFileHandler = (e) => {
     const file = e.target.files[0]; // implement the drop zone
@@ -239,7 +242,7 @@ const ProductsScreen=()=> {
                   </button>
                   <button
                     className="button"
-                    // onClick={() => deleteHandler(product)}
+                    onClick={() => deleteHandler(product)}
                   >
                     Delete
                   </button>

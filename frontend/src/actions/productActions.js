@@ -9,7 +9,10 @@ const {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_SAVE_REQUEST,
   PRODUCT_SAVE_SUCCESS,
-  PRODUCT_SAVE_FAIL
+  PRODUCT_SAVE_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL
 } = require("../constants/productConstants");
 
 const listProducts = () => async (dispatch) => {
@@ -49,4 +52,19 @@ const detailsProduct = (productId) => async (dispatch) => {
   }
 };
 
-export { listProducts, detailsProduct, saveProduct };
+const deleteProduct = (productId) => async (dispatch,getState) => {
+  try {
+    const {userSignin: {userInfo}} = getState()
+    dispatch({ type: PRODUCT_DELETE_REQUEST});
+    const { data } = await axios.delete(`/api/products/${productId}`,{
+      headers:{
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.message });
+  }
+};
+
+export { listProducts, detailsProduct, saveProduct ,deleteProduct};
