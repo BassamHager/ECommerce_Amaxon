@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
 
-function RegisterScreen(props) {
-
+const RegisterScreen=(props)=> {
+  // redux
+  const userRegister = useSelector(state => state.userRegister);
+  const { loading, userInfo, error } = userRegister;
+  const dispatch = useDispatch();
+  // inner state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [, setRePassword] = useState(''); // check
-  const userRegister = useSelector(state => state.userRegister);
-  const { loading, userInfo, error } = userRegister;
-  const dispatch = useDispatch();
-
+  //
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+  
   useEffect(() => {
     if (userInfo) {
       props.history.push(redirect);

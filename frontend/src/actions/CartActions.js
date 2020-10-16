@@ -1,5 +1,5 @@
 // constants
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING } from "../constants/cartConstants";
 // packages & libraries
 import Axios from "axios";
 import Cookie from "js-cookie";
@@ -38,4 +38,17 @@ const removeFromCart = (productId) => async (dispatch, getState) => {
   } catch (error) {}
 };
 
-export { addToCart, removeFromCart };
+// shipping
+const saveShipping = (data) => async (dispatch) => {
+  // try {
+    // const { data } = await Axios.get(`/api/products/${productId}`);
+    dispatch({ type: CART_SAVE_SHIPPING, payload: data });
+    // cookie
+  //   const {
+  //     cart: { cartItems },
+  //   } = getState();
+  //   Cookie.set("cartItems", JSON.stringify(cartItems));
+  // } catch (error) {}
+};
+
+export { addToCart, removeFromCart, saveShipping};

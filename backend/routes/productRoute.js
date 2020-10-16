@@ -8,9 +8,19 @@ const router = express.Router();
 
 // get all
 router.get('/',async(_,res)=>{
-  const products = await Product.find({})
-  res.send(products)
+  const product = await Product.find()
+  res.send(product)
 })
+
+// get product
+router.get('/:id', async (req, res) => {
+    const product = await Product.findOne({ _id: req.params.id });
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(404).send({ message: 'Product Not Found.' });
+    }
+  });
 
 // add product
 router.post('/', isAuth, isAdmin, async (req, res) => {
@@ -84,14 +94,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 //   res.send(products);
 // });
 
-// router.get('/:id', async (req, res) => {
-//   const product = await Product.findOne({ _id: req.params.id });
-//   if (product) {
-//     res.send(product);
-//   } else {
-//     res.status(404).send({ message: 'Product Not Found.' });
-//   }
-// });
+// 
 // router.post('/:id/reviews', isAuth, async (req, res) => {
 //   const product = await Product.findById(req.params.id);
 //   if (product) {

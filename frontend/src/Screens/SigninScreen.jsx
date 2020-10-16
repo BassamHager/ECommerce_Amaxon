@@ -4,11 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 
 const SigninScreen=(props)=> {
-  const [email, setEmail] = useState(''); // add validation
-  const [password, setPassword] = useState(''); //
+  // redux
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
+  // inner state
+  const [email, setEmail] = useState(''); // add validation
+  const [password, setPassword] = useState(''); //
+  // 
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
 
   useEffect(() => {
