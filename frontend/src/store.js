@@ -7,6 +7,7 @@ import { cartReducer } from "./reducers/cartReducers";
 import {
   productDetailsReducer,
   productListReducer,
+  productSaveReducer,
 } from "./reducers/productReducer";
 import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userSignin: userSigninReducer,
-  userRegister: userRegisterReducer
+  userRegister: userRegisterReducer,
+  productSave: productSaveReducer
 });
 
 // enhancer

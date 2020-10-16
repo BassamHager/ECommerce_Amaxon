@@ -4,9 +4,10 @@ import "./App.css";
 // components
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
 import SigninScreen from "./screens/SigninScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import ProductScreen from "./screens/ProductScreen";
+import ProductsScreen from "./screens/ProductsScreen";
 // redux
 import { useSelector } from "react-redux";
 
@@ -17,6 +18,7 @@ const App = () => {
   const openMenu = () => {
     document.querySelector(".sidebar").classList.add("open");
   };
+  
   const closeMenu = () => {
     document.querySelector(".sidebar").classList.remove("open");
   };
@@ -57,6 +59,7 @@ const App = () => {
 
         <main className="main">
           <div className="content">
+            <Route path="/products" component={ProductsScreen} />
             <Route path="/register" component={RegisterScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/product/:id" component={ProductScreen} />

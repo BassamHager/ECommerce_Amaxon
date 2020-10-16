@@ -8,7 +8,7 @@ function RegisterScreen(props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
+  const [, setRePassword] = useState(''); // check
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function RegisterScreen(props) {
     return () => {
       //
     };
-  }, [userInfo]);
+  }, [userInfo,props.history,redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -67,9 +67,7 @@ function RegisterScreen(props) {
         <li>
           Already have an account?
           <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary text-center" >Create your Amaxon account</Link>
-
         </li>
-
       </ul>
     </form>
   </div>
