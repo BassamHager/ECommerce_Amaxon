@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CheckoutSteps from '../components/CheckoutSteps';
 // redux
 import { useDispatch } from 'react-redux';
-import { savePayment } from '../actions/cartActions';
+import { savePayment } from '../redux/actions/cartActions';
 
 const PaymentScreen=(props)=> {
     // redux

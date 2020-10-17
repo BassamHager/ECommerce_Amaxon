@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 // other packages & libraries
-import { listProducts } from "../actions/productActions";
+import { listProducts } from "../redux/actions/productActions";
 
 const HomeScreen = () => {
   const productList = useSelector((state) => state.productList);

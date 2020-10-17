@@ -6,7 +6,7 @@ import {
   saveProduct,
   listProducts,
   deleteProduct,
-} from '../actions/productActions';
+} from '../redux/actions/productActions';
 
 const ProductsScreen=()=> {
   // redux

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrder } from '../actions/orderActions';
+import { createOrder } from '../redux/actions/orderActions';
 
 const PlaceOrderScreen=(props)=> {
   // redux

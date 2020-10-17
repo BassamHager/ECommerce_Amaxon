@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { detailsProduct } from "../actions/productActions";
+import { detailsProduct } from "../redux/actions/productActions";
 
 const ProductScreen = (props) => {
   const productId = props.match.params.id;

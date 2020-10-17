@@ -3,7 +3,7 @@ import React, {  useState } from 'react';
 import CheckoutSteps from '../components/CheckoutSteps';
 // redux
 import { useDispatch } from 'react-redux';
-import { saveShipping } from '../actions/cartActions';
+import { saveShipping } from '../redux/actions/cartActions';
 
 const ShippingScreen=(props)=> {
   // redux

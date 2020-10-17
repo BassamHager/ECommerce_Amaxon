@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 import config from "./config";
 import mongoose from "mongoose";
 import bodyParser from 'body-parser'
-// data
-// import data from "./data";
+import path from 'path';
 // routes
 import userRoute from './routes/userRoute'
 import productRoute from './routes/productRoute'
 import orderRoute from './routes/orderRoute'
+import uploadRoute from './routes/uploadRoute';
 
 // config
 dotenv.config();
@@ -24,14 +24,25 @@ mongoose
 
 // constants
 const app = express();
-const PORT = 5000;
+const PORT = config.PORT
 
-// middleware & routes
+// middleware
 app.use(bodyParser.json())
+
+// routes
+app.use('/api/uploads', uploadRoute);
 app.use('/api/users',userRoute)
 app.use('/api/products',productRoute)
 app.use('/api/orders',orderRoute)
 
+app.get('/api/config/paypal', (req, res) => {
+  res.send(config.PAYPAL_CLIENT_ID);
+});
+app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
+app.use(express.static(path.join(__dirname, '/../frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
+});
 
 app.listen(PORT, () =>
   console.log(`Server started at http://localhost:${PORT}/api/products`)
