@@ -10,14 +10,22 @@ import {
   productListReducer,
   productSaveReducer,
 } from "./reducers/productReducer";
-import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
+import { userRegisterReducer, userSigninReducer, userUpdateReducer } from "./reducers/userReducers";
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+  myOrderListReducer,
+  orderListReducer,
+  orderDeleteReducer,
+} from './reducers/orderReducers';
 
 // cookie
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || null;
 
 // init-state
-const initialState = { cart: { cartItems } ,userSignin: {userInfo}};
+const initialState = { cart: { cartItems, shipping:{}, payment:{} } ,userSignin: {userInfo}};
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -25,7 +33,14 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
   productSave: productSaveReducer,
-  productDelete: productDeleteReducer
+  productDelete: productDeleteReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  userUpdate: userUpdateReducer,
+  myOrderList: myOrderListReducer,
+  orderList: orderListReducer,
+  orderDelete: orderDeleteReducer,
 });
 
 // enhancer

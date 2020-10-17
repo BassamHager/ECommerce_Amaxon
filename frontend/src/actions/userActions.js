@@ -6,7 +6,10 @@ import {
     USER_SIGNIN_FAIL,
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
-    USER_REGISTER_FAIL
+    USER_REGISTER_FAIL,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL
   } from "../constants/userConstants";
 
 // signin
@@ -33,4 +36,22 @@ const register = (name, email, password) => async (dispatch) => {
     }
   }
 
-export {signin, register}
+  // update
+  const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
+    const { userSignin: { userInfo } } = getState();
+    dispatch({ type: USER_UPDATE_REQUEST, payload: { userId, name, email, password } });
+    try {
+      const { data } = await Axios.put("/api/users/" + userId,
+        { name, email, password }, {
+        headers: {
+          Authorization: 'Bearer ' + userInfo.token
+        }
+      });
+      dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+      Cookie.set('userInfo', JSON.stringify(data));
+    } catch (error) {
+      dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
+    }
+  }
+
+export {signin, register, update}

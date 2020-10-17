@@ -36,7 +36,7 @@ const PaymentScreen=(props)=> {
                   value="paypal"
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 ></input>
-                <label for="paymentMethod">Paypal</label>
+                <label htmlFor="paymentMethod">Paypal</label>
               </div>
             </li>
 
