@@ -1,37 +1,29 @@
-import jwt from 'jsonwebtoken'
-import config from './config'
+import jwt from "jsonwebtoken";
+import config from "./config";
 
 const getToken = (user) => {
-    return jwt.sign({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      }, config.JWT_SECRET, {
-        expiresIn: '48h'
-    })
-}
+  const { _id, name, email, isAdmin } = user;
+  return jwt.sign({ _id, name, email, isAdmin }, config.JWT_SECRET, {
+    expiresIn: "48h",
+  });
+};
 
-const isAuth = (req,res,next)=>{
-    const token = req.headers.authorization;
-    if(token){
-        const onlyToken = token.slice(7,token.length);
-        jwt.verify(onlyToken,config.JWT_SECRET,(err,decoded)=>{
-            if(err) return res.status(401).send({msg: 'Invalid Token!'})
-            req.user = decoded;
-            next();
-            return
-        })
-    } else {
-        return res.status(401).send({msg: 'Token is not supplied!'})
-    }
-}
+const isAuth = (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (auth) {
+    const token = auth.split(" ")[1];
+    jwt.verify(token, config.JWT_SECRET, (err, decoded) => {
+      if (err) return res.status(401).send({ msg: "Invalid Token!" });
+      req.user = decoded;
+      return next();
+    });
+  }
+  return res.status(401).send({ msg: "Token is not supplied!" });
+};
 
-const isAdmin = (req,res,next)=>{
-    if(req.user.isAdmin){
-        return next()
-    }
-    return res.status(401).send({msg:'Admin token is not valid!'})
-}
+const isAdmin = (req, res, next) => {
+  if (req.user.isAdmin) return next();
+  return res.status(401).send({ msg: "Admin token is not valid!" });
+};
 
-export {getToken,isAuth,isAdmin}
+export { getToken, isAuth, isAdmin };
