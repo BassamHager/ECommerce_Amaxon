@@ -6,26 +6,21 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../redux/actions/orderActions';
 
-const PlaceOrderScreen=(props)=> {
+const PlaceOrderScreen=({history})=> {
   // redux
-  const cart = useSelector(state => state.cart);
-  const { cartItems, shipping, payment } = cart;
-  const orderCreate = useSelector(state => state.orderCreate);
-  const { success, order } = orderCreate;
+  const { cartItems, shipping, payment } = useSelector(state => state.cart);
+  const { success, order } = useSelector(state => state.orderCreate);
   const dispatch = useDispatch();
   //
-  if (!shipping.address) {
-    props.history.push("/shipping");
-  } else if (!payment.paymentMethod) {
-    props.history.push("/payment");
-  }
+  if (!shipping.address) history.push("/shipping");
+  else if (!payment.paymentMethod) history.push("/payment") 
+  
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 10;
   const taxPrice = 0.15 * itemsPrice;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
   const placeOrderHandler = () => {
-    // create an order
     dispatch(createOrder({
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
@@ -33,10 +28,8 @@ const PlaceOrderScreen=(props)=> {
   }
 
   useEffect(() => {
-    if (success) {
-      props.history.push("/order/" + order._id);
-    }
-  }, [success, props.history]);
+    if (success) history.push(`/order/${order._id}`); // create order
+  }, [success, history, order._id]);
 
   return <div>
     <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
@@ -47,14 +40,14 @@ const PlaceOrderScreen=(props)=> {
             Shipping
           </h3>
           <div>
-            {cart.shipping.address}, {cart.shipping.city},
-          {cart.shipping.postalCode}, {cart.shipping.country},
+            {shipping.address}, {shipping.city},
+          {shipping.postalCode}, {shipping.country},
           </div>
         </div>
         <div>
           <h3>Payment</h3>
           <div>
-            Payment Method: {cart.payment.paymentMethod}
+            Payment Method: {payment.paymentMethod}
           </div>
         </div>
         <div>

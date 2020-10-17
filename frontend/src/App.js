@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./App.css";
 // screens
@@ -15,15 +15,17 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const userSignin = useSelector(state => state.userSignin)
-  const {userInfo} = userSignin;
-  
-  const openMenu = () => {
-    document.querySelector(".sidebar").classList.add("open");
-  };
-  
-  const closeMenu = () => {
-    document.querySelector(".sidebar").classList.remove("open");
+  // redux
+  const { userInfo } = useSelector((state) => state.userSignin);
+
+  //
+  const [isOpenedSide, setIsOpenedSide] = useState(false);
+  const toggleSideBar = () => {
+    const sideBar = document.querySelector(".sidebar");
+    !isOpenedSide
+      ? sideBar.classList.add("open")
+      : sideBar.classList.remove("open");
+    setIsOpenedSide(!isOpenedSide);
   };
 
   return (
@@ -31,22 +33,22 @@ const App = () => {
       <div className="grid-container">
         <header className="header">
           <div className="brand">
-            <button onClick={openMenu}>&#9776;</button>
+            <button onClick={toggleSideBar}>&#9776;</button>
             <Link to="/">Amaxon</Link>
           </div>
           <div className="header-links">
             <a href="cart.html">Cart</a>
-            {
-              userInfo
-                ? <Link to='/profile'>{userInfo.name}</Link>
-                : <Link to="/signin">Sign In</Link>
-            }
+            {userInfo ? (
+              <Link to="/profile">{userInfo.name}</Link>
+            ) : (
+              <Link to="/signin">Sign In</Link>
+            )}
           </div>
         </header>
 
         <aside className="sidebar">
           <h3>Shopping Categories</h3>
-          <button className="sidebar-close-button" onClick={closeMenu}>
+          <button className="sidebar-close-button" onClick={toggleSideBar}>
             x
           </button>
           <ul>
