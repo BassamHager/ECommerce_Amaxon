@@ -5,30 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 // actions
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 
-const CartScreen = (props) => {
+const CartScreen = ({ match, location, history }) => {
   // redux
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart; // distructure it with above
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  // props
-  const productId = props.match.params.id;
-  const qty = props.location.search
-    ? Number(props.location.search.split("=")[1])
-    : 1;
+  //
+  const productId = match.params.id;
+  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   // methods
-  const removeFromCartHandler = (productId) => {
+  const removeFromCartHandler = (productId) =>
     dispatch(removeFromCart(productId));
-  };
 
   useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
+    if (productId) dispatch(addToCart(productId, qty));
   }, [productId, qty, dispatch]);
 
-  const checkoutHandler = () => {
-    props.history.push("/signin?redirect=shipping");
-  };
+  const checkoutHandler = () => history.push("/signin?redirect=shipping");
 
   return (
     <div className="cart">

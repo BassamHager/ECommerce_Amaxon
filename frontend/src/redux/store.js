@@ -10,7 +10,11 @@ import {
   productListReducer,
   productSaveReducer,
 } from "./reducers/productReducer";
-import { userRegisterReducer, userSigninReducer, userUpdateReducer } from "./reducers/userReducers";
+import {
+  userRegisterReducer,
+  userSigninReducer,
+  userUpdateReducer,
+} from "./reducers/userReducers";
 import {
   orderCreateReducer,
   orderDetailsReducer,
@@ -18,14 +22,17 @@ import {
   myOrderListReducer,
   orderListReducer,
   orderDeleteReducer,
-} from './reducers/orderReducers';
+} from "./reducers/orderReducers";
 
 // cookie
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || null;
 
 // init-state
-const initialState = { cart: { cartItems, shipping:{}, payment:{} } ,userSignin: {userInfo}};
+const initialState = {
+  cart: { cartItems, shipping: {}, payment: {} },
+  userSignin: { userInfo },
+};
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
