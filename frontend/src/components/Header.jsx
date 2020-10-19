@@ -17,7 +17,7 @@ const Header = () => {
         <Link to="/">Amaxon</Link>
       </div>
       <div className="header-links">
-        <a href="cart.html">Cart</a>
+        <Link to="/cart">Cart</Link>
         {userInfo ? (
           <Link to="/profile">{userInfo.name}</Link>
         ) : (
