@@ -11,15 +11,15 @@ const PlaceOrderScreen = ({ history }) => {
   const { cartItems, shipping, payment } = useSelector((state) => state.cart);
   const { success, order } = useSelector((state) => state.orderCreate);
   const dispatch = useDispatch();
-  //
+  // redirect
   if (!shipping.address) history.push("/shipping");
   else if (!payment.paymentMethod) history.push("/payment");
-
+  // calculated variables
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 10;
   const taxPrice = 0.15 * itemsPrice;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
-
+  // methods
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -34,9 +34,10 @@ const PlaceOrderScreen = ({ history }) => {
     );
   };
 
+  let orderId = order ? order._id : "";
   useEffect(() => {
-    if (success) history.push(`/order/${order._id}`);
-  }, [success, history]);
+    if (success) history.push(`/order/${orderId}`);
+  }, [success, history, orderId]);
 
   return (
     <div>

@@ -1,43 +1,23 @@
 import express from "express";
 import Order from "../models/orderModel";
-import { isAuth, isAdmin } from "../util";
+import { isAuth, isAdmin, sendHttpErr } from "../util";
+// controller functions
+import { createOrder, getUserOrder } from "../controllers/orderControllers";
 
-const router = express.Router();
+const router = express.Router(); // add validation for inputs
 
-router.get("/", isAuth, async (_, res) => {
-  const orders = await Order.find({}).populate("user");
-  res.send(orders);
-});
+router.get("/", isAuth, getUserOrder);
 
-router.post("/", isAuth, async (req, res) => {
-  const {
-    orderItems,
-    shipping,
-    payment,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  } = req.body;
-
-  const newOrder = new Order({
-    user: req.user._id,
-    orderItems,
-    shipping,
-    payment,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  });
-  const newOrderCreated = await newOrder.save();
-  res.status(201).send({ message: "New Order Created", data: newOrderCreated });
-});
+router.post("/", isAuth, createOrder);
 
 router.get("/mine", isAuth, async (req, res) => {
-  const orders = await Order.find({ user: req.user._id });
-  console.log(orders);
-  res.send(orders);
+  try {
+    const orders = await Order.find({ user: req.user._id });
+    console.log(orders);
+    res.send(orders);
+  } catch (error) {
+    sendHttpErr("could not get your ");
+  }
 });
 
 router.get("/:id", isAuth, async (req, res) => {

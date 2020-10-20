@@ -30,13 +30,20 @@ const createOrder = (order) => async (dispatch, getState) => {
       },
     } = getState();
 
-    const { data: newOrder } = await Axios.post("/api/orders", order, {
-      headers: {
-        Authorization: " Bearer " + token,
-      }, // { data: { data: newOrder } }
-    });
+    console.log(token);
+
+    const { data: newOrder } = await Axios.post(
+      "/api/orders",
+      order
+      // , {
+      //   headers: {
+      //     Authorization: "Bearer " + token,
+      //   }, // { data: { data: newOrder } }
+      // }
+    );
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
   } catch (error) {
+    console.log("hello error");
     dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
   }
 };

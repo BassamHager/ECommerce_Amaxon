@@ -26,4 +26,13 @@ const isAdmin = (req, res, next) => {
   return res.status(401).send({ msg: "Admin token is not valid!" });
 };
 
-export { getToken, isAuth, isAdmin };
+// error instantiating
+class HttpError extends Error {
+  constructor(message, errorCode) {
+    super(message);
+    this.code = errorCode;
+  }
+}
+const sendHttpErr = () => new HttpError(msg, errCode);
+
+export { getToken, isAuth, isAdmin, sendHttpErr };
